@@ -2,16 +2,15 @@ function getComputerChoice() {
   let randomChoice = Math.floor(Math.random() * 3);
   let computerChoice;
 
-  if (randomChoice == 0) computerChoice = "Paper";
-  else if (randomChoice == 1) computerChoice = "Rock";
-  else computerChoice = "Scissors";
+  if (randomChoice == 0) computerChoice = "Paper 📃";
+  else if (randomChoice == 1) computerChoice = "Rock 🪨";
+  else computerChoice = "Scissors ✂️";
 
   return computerChoice;
 }
 
 function getHumanChoice() {
-  let humanInput = prompt("What do you choose?");
-  let humanChoice;
+  let humanInput = prompt("What do you choose? ⁉️⁉️");
 
   if (
     humanInput == "S" ||
@@ -19,24 +18,24 @@ function getHumanChoice() {
     humanInput == "Scissors" ||
     humanInput == "scissors"
   ) {
-    humanChoice = "Scissors";
+    humanInput = "Scissors ✂️";
   } else if (
     humanInput == "P" ||
     humanInput == "p" ||
     humanInput == "Paper" ||
     humanInput == "paper"
   ) {
-    humanChoice = "Paper";
+    humanInput = "Paper 📃";
   } else if (
     humanInput == "R" ||
     humanInput == "r" ||
     humanInput == "Rock" ||
     humanInput == "rock"
   ) {
-    humanChoice = "Rock";
+    humanInput = "Rock 🪨";
   }
 
-  return humanChoice;
+  return humanInput;
 }
 
 let humanScore = 0,
@@ -44,34 +43,33 @@ let humanScore = 0,
   round = 1;
 
 function playRound(humanChoice, computerChoice) {
-  if (humanChoice == "Paper" && computerChoice == "Scissors") {
-    computerScore++;
-  } else if (humanChoice == "Scissors" && computerChoice == "Paper") {
-    humanScore++;
-  } else if (humanChoice == "Rock" && computerChoice == "Paper") {
-    computerScore++;
-  } else if (humanChoice == "Paper" && computerChoice == "Rock") {
-    humanScore++;
-  } else if (humanChoice == "Scissors" && computerChoice == "Rock") {
-    computerScore++;
-  } else if (humanChoice == "Rock" && computerChoice == "Scissors") {
-    humanScore++;
+  console.log(
+    "Your choice: " + humanChoice + "\n" + "Computer Choice: " + computerChoice
+  );
+
+  if (humanChoice === computerChoice) {
+    console.log("Conclusion: It's a draw!");
   } else if (
-    (humanChoice == "Scissors" && computerChoice == "Scissors") ||
-    (humanChoice == "Paper" && computerChoice == "Paper") ||
-    (humanChoice == "Rock" && computerChoice == "Rock")
+    (humanChoice === "Paper" && computerChoice === "Rock") ||
+    (humanChoice === "Rock" && computerChoice === "Scissors") ||
+    (humanChoice === "Scissors" && computerChoice === "Paper")
   ) {
-    alert("It's a draw!");
+    humanScore++;
+    console.log("Conclusion: You won this round!");
+  } else {
+    computerScore++;
+    console.log("Conclusion: You lost this round.");
   }
-  if (computerScore < humanScore) alert("You won round " + round);
-  else alert("You lost round " + round);
 
   console.log(
-    "Your choice: " +
-      humanChoice +
-      " /n " +
-      "Computer Choice: " +
-      computerChoice
+    "=====Round #" +
+      round +
+      " scores===== \n" +
+      "human score: " +
+      humanScore +
+      "\n" +
+      "computer score: " +
+      computerScore
   );
 }
 
@@ -85,3 +83,12 @@ function playGame() {
 }
 
 playGame();
+
+console.log(
+  "=====Final scores=====\n" +
+    "human score: " +
+    humanScore +
+    "\n" +
+    "computer score: " +
+    computerScore
+);
