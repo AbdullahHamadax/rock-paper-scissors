@@ -1,5 +1,5 @@
 function getComputerChoice() {
-  let randomChoice = Math.floor(Math.random() * 3);
+  const randomChoice = Math.floor(Math.random() * 3);
   let computerChoice;
 
   if (randomChoice == 0) computerChoice = "Paper";
@@ -10,30 +10,18 @@ function getComputerChoice() {
 }
 
 function getHumanChoice() {
-  let humanInput = prompt("What do you choose?");
+  const humanInput = prompt("What do you choose?").toLowerCase().trim();
   let humanChoice;
 
-  if (
-    humanInput == "S" ||
-    humanInput == "s" ||
-    humanInput == "Scissors" ||
-    humanInput == "scissors"
-  ) {
+  if (humanInput == "s" || humanInput == "scissors") {
     humanChoice = "Scissors";
-  } else if (
-    humanInput == "P" ||
-    humanInput == "p" ||
-    humanInput == "Paper" ||
-    humanInput == "paper"
-  ) {
+  } else if (humanInput == "p" || humanInput == "paper") {
     humanChoice = "Paper";
-  } else if (
-    humanInput == "R" ||
-    humanInput == "r" ||
-    humanInput == "Rock" ||
-    humanInput == "rock"
-  ) {
+  } else if (humanInput == "r" || humanInput == "rock") {
     humanChoice = "Rock";
+  } else {
+    alert("Invalid choice. Please choose Rock, Paper, or Scissors.");
+    return getHumanChoice();
   }
 
   return humanChoice;
@@ -44,35 +32,46 @@ let humanScore = 0,
   round = 1;
 
 function playRound(humanChoice, computerChoice) {
-  if (humanChoice == "Paper" && computerChoice == "Scissors") {
-    computerScore++;
-  } else if (humanChoice == "Scissors" && computerChoice == "Paper") {
-    humanScore++;
-  } else if (humanChoice == "Rock" && computerChoice == "Paper") {
-    computerScore++;
-  } else if (humanChoice == "Paper" && computerChoice == "Rock") {
-    humanScore++;
-  } else if (humanChoice == "Scissors" && computerChoice == "Rock") {
-    computerScore++;
-  } else if (humanChoice == "Rock" && computerChoice == "Scissors") {
-    humanScore++;
-  } else if (
-    (humanChoice == "Scissors" && computerChoice == "Scissors") ||
-    (humanChoice == "Paper" && computerChoice == "Paper") ||
-    (humanChoice == "Rock" && computerChoice == "Rock")
+  let result;
+
+  if (
+    (humanChoice == "Paper" && computerChoice == "Rock") ||
+    (humanChoice == "Scissors" && computerChoice == "Paper") ||
+    (humanChoice == "Rock" && computerChoice == "Scissors")
   ) {
-    alert("It's a draw!");
+    humanScore++;
+    result = "win";
+  } else if (humanChoice === computerChoice) {
+    result = "draw";
+  } else {
+    computerScore++;
+    result = "lose";
   }
-  if (computerScore < humanScore) alert("You won round " + round);
-  else alert("You lost round " + round);
+
+  if (result === "win") {
+    console.log("You won round " + round);
+  } else if (result === "lose") {
+    console.log("You lost round " + round);
+  } else {
+    console.log("It's a draw in round " + round);
+  }
 
   console.log(
-    "Your choice: " +
-      humanChoice +
-      " /n " +
-      "Computer Choice: " +
-      computerChoice
+    "Your choice: " + humanChoice + "  " + "Computer choice: " + computerChoice
   );
+  console.log(
+    "Your score: " + humanScore + "  " + "Computer score: " + computerScore
+  );
+}
+
+function determineWinner() {
+  if (computerScore < humanScore) {
+    console.log("You have higher overall score! You won the game! 🎉");
+  } else if (computerScore > humanScore) {
+    console.log("Computer has higher overall score! You lost the game! 😞");
+  } else {
+    console.log("Both of you have the same overall score! It's a tie! 🤝");
+  }
 }
 
 function playGame() {
@@ -82,6 +81,7 @@ function playGame() {
     playRound(hChoice, cChoice);
     round++;
   }
+  determineWinner();
 }
 
 playGame();
