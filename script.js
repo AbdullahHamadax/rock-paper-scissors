@@ -2,9 +2,9 @@ function getComputerChoice() {
   const randomChoice = Math.floor(Math.random() * 3);
   let computerChoice;
 
-  if (randomChoice == 0) computerChoice = "Paper";
-  else if (randomChoice == 1) computerChoice = "Rock";
-  else computerChoice = "Scissors";
+  if (randomChoice == 0) computerChoice = "Paper 📃";
+  else if (randomChoice == 1) computerChoice = "Rock 🪨";
+  else computerChoice = "Scissors ✂️";
 
   return computerChoice;
 }
@@ -24,7 +24,7 @@ function getHumanChoice() {
     return getHumanChoice();
   }
 
-  return humanChoice;
+  return humanInput;
 }
 
 let humanScore = 0,
@@ -90,3 +90,12 @@ function playGame() {
 }
 
 playGame();
+
+console.log(
+  "=====Final scores=====\n" +
+    "human score: " +
+    humanScore +
+    "\n" +
+    "computer score: " +
+    computerScore
+);
