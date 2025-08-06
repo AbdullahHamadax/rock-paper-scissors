@@ -1,4 +1,3 @@
-
 # Rock Paper Scissors Game
 
 This project implements a simple game of Rock Paper Scissors that is played entirely through the console. It includes JavaScript logic to generate computer choices, accept user inputs, play rounds, and declare a winner after 5 rounds.
@@ -33,6 +32,8 @@ To run the game:
 - **getHumanChoice**: Prompts the user for their choice and validates it.
 - **playRound**: Compares the choices and determines the winner for each round.
 - **playGame**: Controls the flow of the game by calling `playRound` for 5 rounds and updating scores.
+- **resetGame**: Resets the scores after the 5 rounds.
+- **determineFinalWinner**: determine the overall winner after the 5 rounds are over.
 
 ## Technologies Used
 
