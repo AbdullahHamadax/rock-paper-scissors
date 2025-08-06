@@ -64,7 +64,7 @@ function playRound(humanChoice, computerChoice) {
   );
 }
 
-function determineWinner() {
+function determineFinalWinner() {
   if (computerScore < humanScore) {
     console.log("You have higher overall score! You won the game! 🎉");
   } else if (computerScore > humanScore) {
@@ -74,6 +74,10 @@ function determineWinner() {
   }
 }
 
+function resetGame() {
+  (humanScore = 0), (computerScore = 0), (round = 1);
+}
+
 function playGame() {
   for (let i = 1; i <= 5; i++) {
     let cChoice = getComputerChoice();
@@ -81,7 +85,8 @@ function playGame() {
     playRound(hChoice, cChoice);
     round++;
   }
-  determineWinner();
+  determineFinalWinner();
+  resetGame();
 }
 
 playGame();
