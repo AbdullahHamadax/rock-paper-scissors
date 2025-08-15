@@ -15,7 +15,6 @@ let humanScore = 0,
   computerScore = 0;
 let gameOver = false;
 
-// Get a random choice for CPU
 function getCPUChoice() {
   const randomChoice = Math.floor(Math.random() * 3);
   if (randomChoice === 0) return "rock";
@@ -23,7 +22,6 @@ function getCPUChoice() {
   return "scissors";
 }
 
-// Add click events to images
 function getUserInput() {
   choiceImages.forEach((img) => {
     img.addEventListener("click", () => {
@@ -42,7 +40,6 @@ function getUserInput() {
   });
 }
 
-// Initialize scores
 function initialState() {
   humanScore = 0;
   computerScore = 0;
@@ -73,7 +70,6 @@ function initialState() {
   );
 }
 
-// Game logic
 function gameLogic(humanChoice, computerChoice) {
   if (
     (humanChoice === "paper" && computerChoice === "rock") ||
@@ -134,12 +130,10 @@ function determineFinalWinner() {
   }
 }
 
-// Reset game
 function resetGame() {
   initialState();
 }
 
-// Start the game
 function playGame() {
   initialState();
   getUserInput();
