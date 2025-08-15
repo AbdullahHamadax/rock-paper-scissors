@@ -1,101 +1,149 @@
-function getComputerChoice() {
-  const randomChoice = Math.floor(Math.random() * 3);
-  let computerChoice;
-
-  if (randomChoice == 0) computerChoice = "Paper 📃";
-  else if (randomChoice == 1) computerChoice = "Rock 🪨";
-  else computerChoice = "Scissors ✂️";
-
-  return computerChoice;
-}
-
-function getHumanChoice() {
-  const humanInput = prompt("What do you choose?").toLowerCase().trim();
-  let humanChoice;
-
-  if (humanInput == "s" || humanInput == "scissors") {
-    humanChoice = "Scissors";
-  } else if (humanInput == "p" || humanInput == "paper") {
-    humanChoice = "Paper";
-  } else if (humanInput == "r" || humanInput == "rock") {
-    humanChoice = "Rock";
-  } else {
-    alert("Invalid choice. Please choose Rock, Paper, or Scissors.");
-    return getHumanChoice();
-  }
-
-  return humanInput;
-}
+const choiceImages = document.querySelectorAll("img");
+const resetBtn = document.querySelector("#reset-button");
+const userScore = document.querySelector("#user-score");
+const cpuScore = document.querySelector("#cpu-score");
+const userResultContainer = document.querySelector("#user-result-container");
+const cpuResultContainer = document.querySelector("#cpu-result-container");
+const userWin = document.querySelector("#user-win");
+const userLose = document.querySelector("#user-lose");
+const cpuWin = document.querySelector("#cpu-win");
+const cpuLose = document.querySelector("#cpu-lose");
+const displayedUserChoice = document.querySelector("#displayed-user-choice");
+const displayedCPUChoice = document.querySelector("#displayed-cpu-choice");
 
 let humanScore = 0,
-  computerScore = 0,
-  round = 1;
+  computerScore = 0;
+let gameOver = false;
 
-function playRound(humanChoice, computerChoice) {
-  let result;
+// Get a random choice for CPU
+function getCPUChoice() {
+  const randomChoice = Math.floor(Math.random() * 3);
+  if (randomChoice === 0) return "rock";
+  if (randomChoice === 1) return "paper";
+  return "scissors";
+}
 
+// Add click events to images
+function getUserInput() {
+  choiceImages.forEach((img) => {
+    img.addEventListener("click", () => {
+      if (gameOver) return; // Stop game if someone has won
+
+      let userInput;
+
+      if (img.id === "rock-image") userInput = "rock";
+      else if (img.id === "paper-image") userInput = "paper";
+      else userInput = "scissors";
+
+      const computerChoice = getCPUChoice();
+      gameLogic(userInput, computerChoice);
+      determineFinalWinner();
+    });
+  });
+}
+
+// Initialize scores
+function initialState() {
+  humanScore = 0;
+  computerScore = 0;
+  userScore.textContent = 0;
+  cpuScore.textContent = 0;
+  displayedUserChoice.textContent = "You chose: nothing ";
+  displayedCPUChoice.textContent = "CPU chose: nothing";
+  gameOver = false;
+
+  userWin.textContent = "";
+  userLose.textContent = "";
+  cpuWin.textContent = "";
+  cpuLose.textContent = "";
+
+  userResultContainer.classList.remove(
+    "text-green-500",
+    "text-red-500",
+    "flex",
+    "items-center",
+    "gap-5"
+  );
+  cpuResultContainer.classList.remove(
+    "text-green-500",
+    "text-red-500",
+    "flex",
+    "items-center",
+    "gap-5"
+  );
+}
+
+// Game logic
+function gameLogic(humanChoice, computerChoice) {
   if (
-    (humanChoice == "Paper" && computerChoice == "Rock") ||
-    (humanChoice == "Scissors" && computerChoice == "Paper") ||
-    (humanChoice == "Rock" && computerChoice == "Scissors")
+    (humanChoice === "paper" && computerChoice === "rock") ||
+    (humanChoice === "scissors" && computerChoice === "paper") ||
+    (humanChoice === "rock" && computerChoice === "scissors")
   ) {
     humanScore++;
-    result = "win";
-  } else if (humanChoice === computerChoice) {
-    result = "draw";
-  } else {
+  } else if (humanChoice !== computerChoice) {
     computerScore++;
-    result = "lose";
   }
 
-  if (result === "win") {
-    console.log("You won round " + round);
-  } else if (result === "lose") {
-    console.log("You lost round " + round);
-  } else {
-    console.log("It's a draw in round " + round);
-  }
+  userScore.textContent = humanScore;
+  cpuScore.textContent = computerScore;
 
-  console.log(
-    "Your choice: " + humanChoice + "  " + "Computer choice: " + computerChoice
-  );
-  console.log(
-    "Your score: " + humanScore + "  " + "Computer score: " + computerScore
-  );
+  displayedUserChoice.textContent = "You chose: " + humanChoice;
+  displayedCPUChoice.textContent = "Cpu chose: " + computerChoice;
 }
 
 function determineFinalWinner() {
-  if (computerScore < humanScore) {
-    console.log("You have higher overall score! You won the game! 🎉");
-  } else if (computerScore > humanScore) {
-    console.log("Computer has higher overall score! You lost the game! 😞");
-  } else {
-    console.log("Both of you have the same overall score! It's a tie! 🤝");
+  if (humanScore === 5) {
+    gameOver = true;
+    userWin.textContent = "WON 🎉";
+    userLose.textContent = "";
+    cpuWin.textContent = "";
+    cpuLose.textContent = "LOSE 😔";
+
+    userResultContainer.classList.add(
+      "text-green-500",
+      "flex",
+      "items-center",
+      "gap-5"
+    );
+    cpuResultContainer.classList.add(
+      "text-red-500",
+      "flex",
+      "items-center",
+      "gap-5"
+    );
+  } else if (computerScore === 5) {
+    gameOver = true;
+    cpuWin.textContent = "WON 🤖";
+    cpuLose.textContent = "";
+    userWin.textContent = "";
+    userLose.textContent = "LOSE 😔";
+
+    cpuResultContainer.classList.add(
+      "text-green-500",
+      "flex",
+      "items-center",
+      "gap-5"
+    );
+    userResultContainer.classList.add(
+      "text-red-500",
+      "flex",
+      "items-center",
+      "gap-5"
+    );
   }
 }
 
+// Reset game
 function resetGame() {
-  (humanScore = 0), (computerScore = 0), (round = 1);
+  initialState();
 }
 
+// Start the game
 function playGame() {
-  for (let i = 1; i <= 5; i++) {
-    let cChoice = getComputerChoice();
-    let hChoice = getHumanChoice();
-    playRound(hChoice, cChoice);
-    round++;
-  }
-  determineFinalWinner();
-  resetGame();
+  initialState();
+  getUserInput();
+  resetBtn.addEventListener("click", resetGame);
 }
 
 playGame();
-
-console.log(
-  "=====Final scores=====\n" +
-    "human score: " +
-    humanScore +
-    "\n" +
-    "computer score: " +
-    computerScore
-);

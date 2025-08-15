@@ -4,7 +4,71 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rock Paper Scissors</title>
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
-  <body></body>
+  <body
+    class="bg-[#030712] text-white font-bold min-h-screen flex flex-col items-center justify-center p-5"
+  >
+    <div class="flex flex-col gap-9 lg:flex-col-reverse lg:items-center">
+      <div class="flex flex-col items-center gap-5 lg:flex-row">
+        <img
+          src="images/Rock.png"
+          alt="rock"
+          class="transition rounded-lg cursor-pointer size-30 hover:scale-105"
+          id="rock-image"
+        />
+        <img
+          src="images/Paper.png"
+          alt="paper"
+          class="transition rounded-lg cursor-pointer size-30 hover:scale-105"
+          id="paper-image"
+        />
+        <img
+          src="images/Scissors.png"
+          alt="scissors"
+          class="transition rounded-lg cursor-pointer size-30 hover:scale-105"
+          id="scissors-image"
+        />
+      </div>
+      <div
+        class="flex flex-col gap-[3rem] text-center lg:flex-row lg:items-center"
+      >
+        <div class="flex flex-col gap-3">
+          <div class="" id="user-result-container">
+            <h1 class="text-3xl">YOU</h1>
+            <p class="text-3xl" id="user-win"></p>
+            <p class="text-3xl" id="user-lose"></p>
+          </div>
+
+          <div
+            class="text-[#F94F6D] rounded-lg bg-[#172030] px-5 py-3 text-2xl shadow-sm shadow-gray-500 w-full h-full"
+          >
+            <p id="user-score"></p>
+          </div>
+          <p id="displayed-user-choice"></p>
+        </div>
+        <button
+          class="bg-transparent text-white border-2 border-[#364153] rounded-[0.313rem] text-[1.125rem] cursor-pointer transition-transform duration-200 ease-in-out p-2 hover:scale-125 hover:border-white"
+          id="reset-button"
+        >
+          RESET SCORE
+        </button>
+        <div class="flex flex-col gap-3">
+          <div class="" id="cpu-result-container">
+            <h1 class="text-3xl">CPU</h1>
+            <p class="text-3xl" id="cpu-win"></p>
+            <p class="text-3xl" id="cpu-lose"></p>
+          </div>
+          <div
+            class="text-[#F94F6D] bg-[#172030] px-5 py-3 text-2xl rounded-lg shadow-sm shadow-gray-500 w-full"
+          >
+            <p id="cpu-score"></p>
+          </div>
+          <p id="displayed-cpu-choice"></p>
+        </div>
+      </div>
+      <div class="flex flex-col items-center gap-5"></div>
+    </div>
+  </body>
 </html>
